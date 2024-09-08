@@ -1,45 +1,90 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef }  from "react";
 import * as THREE from 'three';
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import vertexShader from "./shader/vert.glsl"
+import fragmentShader from "./shader/frag.glsl"
 
 const useThree = () => {
-  const mountRef = useRef(null);
+    const mountRef = useRef(null);
 
-  useEffect(() => {
-    const { current: mount } = mountRef;
-    if (!mount) return;
+    useEffect(() => {
+        const {current: mount} = mountRef;
+        if(!mount) return;
 
-    // Three.jsのシーン、カメラ、レンダラーのセットアップ
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    mount.appendChild(renderer.domElement);
+        // レンダラーを作成
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        mount.appendChild(renderer.domElement);
 
-    // 立方体の作成
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+        // シーンを作成
+        const scene = new THREE.Scene();
 
-    // アニメーションループ
-    const animate = () => {
-      requestAnimationFrame(animate);
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
-      cube.rotation.z += 0.01;
-      renderer.render(scene, camera);
-    };
-    animate();
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 100);
+        camera.position.set(0.25, -0.25, 1);
 
-    // クリーンアップ
-    return () => {
-      mount.removeChild(renderer.domElement);
-    };
-  }, []);
+        // Controls
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
 
-  return mountRef;
+        const geometry = new THREE.PlaneGeometry(1, 1, 32, 32);
+
+        const count = geometry.attributes.position.count;
+        const randoms = new Float32Array(count);
+        for(let i = 0; i < count; i++){
+            randoms[i] = Math.random();
+        }
+
+        geometry.setAttribute("aRandom", new THREE.BufferAttribute(randoms, 1));
+        console.log(geometry);
+        
+
+        // マテリアル
+        const material = new THREE.RawShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+        });
+
+        // メッシュ
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        const clock = new THREE.Clock();
+        let animationId;
+        const animation = () => {
+
+            const elapsedTime = clock.getElapsedTime();
+            controls.update();
+
+            // レンダリング
+            renderer.render(scene, camera);
+            animationId = requestAnimationFrame(animation);
+        }
+        animation();
+
+        const handleResize = () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        };
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            cancelAnimationFrame(animationId);
+            window.removeEventListener('resize', handleResize);
+            renderer.dispose();
+            mount.removeChild(renderer.domElement);
+        }
+
+    }, []);
+
+    return mountRef;
 };
 
 export default useThree;

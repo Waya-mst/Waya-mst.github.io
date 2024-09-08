@@ -8,13 +8,13 @@ export default function Home() {
   return (
     <div style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
       {/* WebGL背景用のコンテナ */}
-      <div ref={mountRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }} />
+      <div ref={mountRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 3 }} />
 
-      {/* 半透明フィルター */}
+      半透明フィルター
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(255, 255, 255, 0.5)', zIndex: 2 }} />
 
-      {/* 元のコンテンツ */}
-      <main className="relative z-10 flex min-h-screen flex-col items-center justify-between p-24" style={{ zIndex: 3 }}>
+      
+      <main className="relative z-10 flex min-h-screen flex-col items-center justify-between p-24" style={{ zIndex: 1 }}>
         <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
           <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
             わやのへや
