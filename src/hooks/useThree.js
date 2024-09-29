@@ -40,18 +40,6 @@ const useThree = () => {
         const geometry = new THREE.SphereGeometry( 1, 14, 20 );
         const positionAttribute = geometry.attributes.position;
 
-        // 頂点の数
-        const vertexCount = positionAttribute.count;
-
-        // すべての頂点の座標を取得
-        for (let i = 0; i < vertexCount; i++) {
-        const x = positionAttribute.getX(i);
-        const y = positionAttribute.getY(i);
-        const z = positionAttribute.getZ(i);
-
-        console.log(`Vertex ${i}: X=${x}, Y=${y}, Z=${z}`);
-        }
-
         const count = geometry.attributes.position.count;
         const randoms = new Float32Array(count);
         for(let i = 0; i < count; i++){
@@ -66,6 +54,10 @@ const useThree = () => {
         const material = new THREE.RawShaderMaterial({
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
+            uniforms: {
+                uMouse: { value: new THREE.Vector2(0, 0) }, // 初期値は(0, 0)
+                uTime: { value: 0.0 },
+            }
         });
 
         // メッシュ
@@ -73,8 +65,10 @@ const useThree = () => {
         scene.add(mesh);
 
         window.addEventListener("mousemove", (event) =>{
-            mouseX = event.pageX;
-            mouseY = event.pageY;
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = (event.clientY / window.innerHeight) * 2 - 1;
+
+            material.uniforms.uMouse.value.set(mouseX, mouseY);
         })
 
         const clock = new THREE.Clock();
