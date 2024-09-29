@@ -14,6 +14,10 @@ const useThree = () => {
         const width = window.innerWidth;
         const height = window.innerHeight;
 
+        let rot = 0;
+        let mouseX = 0;
+        let mouseY = 0;
+
         // レンダラーを作成
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(width, height);
@@ -22,16 +26,31 @@ const useThree = () => {
 
         // シーンを作成
         const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xadd8e6);
 
         // カメラを作成
         const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 100);
-        camera.position.set(0.25, -0.25, 1);
+        camera.position.set(10, 10, 10);
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         // Controls
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
 
-        const geometry = new THREE.PlaneGeometry(1, 1, 32, 32);
+        const geometry = new THREE.SphereGeometry( 1, 14, 20 );
+        const positionAttribute = geometry.attributes.position;
+
+        // 頂点の数
+        const vertexCount = positionAttribute.count;
+
+        // すべての頂点の座標を取得
+        for (let i = 0; i < vertexCount; i++) {
+        const x = positionAttribute.getX(i);
+        const y = positionAttribute.getY(i);
+        const z = positionAttribute.getZ(i);
+
+        console.log(`Vertex ${i}: X=${x}, Y=${y}, Z=${z}`);
+        }
 
         const count = geometry.attributes.position.count;
         const randoms = new Float32Array(count);
@@ -53,9 +72,21 @@ const useThree = () => {
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
 
+        window.addEventListener("mousemove", (event) =>{
+            mouseX = event.pageX;
+            mouseY = event.pageY;
+        })
+
         const clock = new THREE.Clock();
         let animationId;
         const animation = () => {
+
+            const targetRot = (mouseX / window.innerWidth) * 360;
+            rot += (targetRot - rot) * 0.02;
+
+            const radian = rot * Math.PI / 180;
+            // camera.position.x = 10 * radian;
+            // camera.position.y = 10 * Math.cos(radian);
 
             const elapsedTime = clock.getElapsedTime();
             controls.update();
