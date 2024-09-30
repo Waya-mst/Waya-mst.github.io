@@ -28,7 +28,7 @@ export default function Home() {
           left: 0,
           width: '100%',
           height: '100%',
-          backdropFilter: 'blur(7px)', // 背景をぼかす
+          backdropFilter: 'blur(4px)', // 背景をぼかす
           zIndex: 2,
         }}
       />
@@ -62,7 +62,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className="mb-3 text-2xl font-semibold">
-              Docs{" "}
+              About{" "}
               <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
                 -&gt;
               </span>
@@ -79,7 +79,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className="mb-3 text-2xl font-semibold">
-              Learn{" "}
+              Works{" "}
               <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
                 -&gt;
               </span>
