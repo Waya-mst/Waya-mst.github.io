@@ -41,7 +41,32 @@ const useThree = () => {
         const loader = new GLTFLoader();
         loader.load("/model/saru.glb", (gltf) => {
             const model = gltf.scene;
+            model.scale.set(4, 4, 4);
             scene.add(model);
+
+            model.traverse((child) => {
+                console.log(child); // attributesの中身を確認
+                if (child.isMesh) {
+                    const geometry = child.geometry;
+                    const count = geometry.attributes.position.count;
+
+                    const sarurandoms = new Float32Array(count);
+                    for (let i = 0; i < count; i++) {
+                        sarurandoms[i] = Math.random();
+                    }
+                    geometry.setAttribute("saruRandom", new THREE.BufferAttribute(sarurandoms, 1));
+                    const material = new THREE.RawShaderMaterial({
+                        vertexShader: vertexShader,
+                        fragmentShader: fragmentShader,
+                        uniforms: {
+                            uColor: { value: new THREE.Color(0xff0000) },
+                            uMouse: { value: new THREE.Vector2(0, 0) }, // 初期値は(0, 0)
+                            uTime: { value: 0.0 },
+                        }
+                    });
+                    child.material = material;
+                }
+            });
         });
 
         const geometry = new THREE.SphereGeometry(1, 14, 20);
@@ -54,7 +79,7 @@ const useThree = () => {
         }
 
         geometry.setAttribute("aRandom", new THREE.BufferAttribute(randoms, 1));
-        console.log(geometry);
+        //console.log(geometry);
 
 
         // マテリアル
@@ -62,6 +87,7 @@ const useThree = () => {
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
             uniforms: {
+                uColor: { value: new THREE.Color(0x000000) },
                 uMouse: { value: new THREE.Vector2(0, 0) }, // 初期値は(0, 0)
                 uTime: { value: 0.0 },
             }

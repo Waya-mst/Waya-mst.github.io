@@ -1,5 +1,6 @@
 // precision highp float;
 
+uniform vec3 uColor;
 uniform vec2 uMouse;
 uniform float uTime;
 
@@ -9,8 +10,10 @@ uniform mat4 modelMatrix;
 
 attribute vec3 position;
 attribute float aRandom;
+attribute float saruRandom;
 
 varying float vRandom;
+varying float sarumodelRandom;
 
 void main(){
 
@@ -30,4 +33,5 @@ void main(){
     gl_Position = projection;
 
     vRandom = aRandom;
+    sarumodelRandom = saruRandom;
 }
