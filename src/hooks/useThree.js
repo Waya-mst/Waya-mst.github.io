@@ -1,5 +1,6 @@
-import { useEffect, useRef }  from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import vertexShader from "./shader/vert.glsl"
 import fragmentShader from "./shader/frag.glsl"
@@ -8,8 +9,8 @@ const useThree = () => {
     const mountRef = useRef(null);
 
     useEffect(() => {
-        const {current: mount} = mountRef;
-        if(!mount) return;
+        const { current: mount } = mountRef;
+        if (!mount) return;
 
         const width = window.innerWidth;
         const height = window.innerHeight;
@@ -37,18 +38,24 @@ const useThree = () => {
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
 
-        const geometry = new THREE.SphereGeometry( 1, 14, 20 );
+        const loader = new GLTFLoader();
+        loader.load("/model/saru.glb", (gltf) => {
+            const model = gltf.scene;
+            scene.add(model);
+        });
+
+        const geometry = new THREE.SphereGeometry(1, 14, 20);
         const positionAttribute = geometry.attributes.position;
 
         const count = geometry.attributes.position.count;
         const randoms = new Float32Array(count);
-        for(let i = 0; i < count; i++){
+        for (let i = 0; i < count; i++) {
             randoms[i] = Math.random();
         }
 
         geometry.setAttribute("aRandom", new THREE.BufferAttribute(randoms, 1));
         console.log(geometry);
-        
+
 
         // マテリアル
         const material = new THREE.RawShaderMaterial({
@@ -64,7 +71,7 @@ const useThree = () => {
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
 
-        window.addEventListener("mousemove", (event) =>{
+        window.addEventListener("mousemove", (event) => {
             mouseX = (event.clientX / window.innerWidth) * 2 - 1;
             mouseY = (event.clientY / window.innerHeight) * 2 - 1;
 
