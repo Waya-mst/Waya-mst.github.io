@@ -15,6 +15,16 @@ const useThree = () => {
         const width = window.innerWidth;
         const height = window.innerHeight;
 
+        const modelmaterial = new THREE.RawShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            uniforms: {
+                uColor: { value: new THREE.Color(0x008080) },
+                uMouse: { value: new THREE.Vector2(0, 0) },
+                uTime: { value: 0.0 },
+            }
+        });
+
         let rot = 0;
         let mouseX = 0;
         let mouseY = 0;
@@ -45,7 +55,7 @@ const useThree = () => {
             scene.add(model);
 
             model.traverse((child) => {
-                console.log(child); // attributesの中身を確認
+                console.log(child); 
                 if (child.isMesh) {
                     const geometry = child.geometry;
                     const count = geometry.attributes.position.count;
@@ -55,16 +65,9 @@ const useThree = () => {
                         sarurandoms[i] = Math.random();
                     }
                     geometry.setAttribute("saruRandom", new THREE.BufferAttribute(sarurandoms, 1));
-                    const material = new THREE.RawShaderMaterial({
-                        vertexShader: vertexShader,
-                        fragmentShader: fragmentShader,
-                        uniforms: {
-                            uColor: { value: new THREE.Color(0xff0000) },
-                            uMouse: { value: new THREE.Vector2(0, 0) }, // 初期値は(0, 0)
-                            uTime: { value: 0.0 },
-                        }
-                    });
-                    child.material = material;
+
+                    console.log(material.uniforms.uMouse);
+                    child.material = modelmaterial;
                 }
             });
         });
@@ -79,7 +82,6 @@ const useThree = () => {
         }
 
         geometry.setAttribute("aRandom", new THREE.BufferAttribute(randoms, 1));
-        //console.log(geometry);
 
 
         // マテリアル
@@ -102,6 +104,7 @@ const useThree = () => {
             mouseY = (event.clientY / window.innerHeight) * 2 - 1;
 
             material.uniforms.uMouse.value.set(mouseX, mouseY);
+            modelmaterial.uniforms.uMouse.value.set(mouseX, mouseY);
         })
 
         const clock = new THREE.Clock();

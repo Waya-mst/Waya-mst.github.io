@@ -28,7 +28,7 @@ export default function Home() {
           left: 0,
           width: '100%',
           height: '100%',
-          backdropFilter: 'blur(4px)', // 背景をぼかす
+          backdropFilter: 'blur(0px)', // 背景をぼかす
           zIndex: 2,
         }}
       />
