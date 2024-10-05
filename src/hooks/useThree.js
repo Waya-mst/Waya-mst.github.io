@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import vertexShader from "./shader/vert.glsl"
 import fragmentShader from "./shader/frag.glsl"
@@ -52,7 +53,7 @@ const useThree = () => {
         loader.load("/model/saru.glb", (gltf) => {
             const model = gltf.scene;
             model.scale.set(4, 4, 4);
-            scene.add(model);
+            //scene.add(model);
 
             model.traverse((child) => {
                 console.log(child); 
@@ -66,8 +67,31 @@ const useThree = () => {
                     }
                     geometry.setAttribute("saruRandom", new THREE.BufferAttribute(sarurandoms, 1));
 
-                    console.log(material.uniforms.uMouse);
-                    child.material = modelmaterial;
+                    //console.log(material.uniforms.uMouse);
+                    //child.material = modelmaterial;
+
+                    const sampler = new MeshSurfaceSampler(child)
+                    .setWeightAttribute(null)
+                    .build();
+
+                    const particleCount = 10000;
+                    const particles = new Float32Array(particleCount * 3); // 頂点ごとのx, y, z座標
+
+                    for (let i = 0; i < particleCount; i++) {
+                        const tempPosition = new THREE.Vector3();
+                        sampler.sample(tempPosition); // サンプルした位置を取得
+                        particles[i * 3] = tempPosition.x;
+                        particles[i * 3 + 1] = tempPosition.y;
+                        particles[i * 3 + 2] = tempPosition.z;
+                    }
+
+                    // パーティクルシステムを作成
+                    const sarugeometry = new THREE.BufferGeometry();
+                    sarugeometry.setAttribute('position', new THREE.BufferAttribute(particles, 3));
+                    const material = new THREE.PointsMaterial({ size: 0.05 });
+                    const pointCloud = new THREE.Points(sarugeometry, material);
+                    pointCloud.scale.set(4, 4, 4);
+                    scene.add(pointCloud);
                 }
             });
         });

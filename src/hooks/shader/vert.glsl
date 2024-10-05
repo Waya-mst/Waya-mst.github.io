@@ -16,8 +16,6 @@ varying float vRandom;
 varying float sarumodelRandom;
 
 void main(){
-
-
     vec3 newPosition = position;
     newPosition.x += uMouse.x * 1.7;
     newPosition.y -= uMouse.y * 1.7;
