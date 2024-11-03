@@ -36,14 +36,14 @@ export default function Home() {
       {/* <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(255, 255, 255, 0.5)', zIndex: 2 }} /> */}
 
       <div 
-        className="fixed top-1 right-10 p-4 flex space-x-7"
+        className="fixed top-0 right-10 p-4 flex space-x-5"
         style={{ zIndex: 3 }}
       >
         <Link 
           href="/about" 
           className="group rounded-lg border border-transparent transition-colors hover:underline"
         >
-          <h2 className="mb-3 text-2xl font-medium">
+          <h2 className="mb-3 text-2l font-normal">
             About{" "}
           </h2>
           {/* <p className="m-0 max-w-[30ch] text-sm opacity-50">
@@ -55,7 +55,7 @@ export default function Home() {
           href="/works"
           className="group rounded-lg border border-transparent transition-colors hover:underline"
         >
-          <h2 className="mb-3 text-2xl font-medium">
+          <h2 className="mb-3 text-2l font-normal">
             Works{" "}
 
           </h2>
@@ -70,7 +70,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className="mb-3 text-2xl font-medium">
+          <h2 className="mb-3 text-2l font-normal">
             Templates{" "}
           </h2>
           {/* <p className="m-0 max-w-[30ch] text-sm opacity-50">
@@ -82,7 +82,7 @@ export default function Home() {
           href="/trivial"
           className="group rounded-lg border border-transparent transition-colors hover:underline"
         >
-          <h2 className="mb-3 text-2xl font-medium">
+          <h2 className="mb-3 text-2l font-normal">
             ???{" "}
           </h2>
           {/* <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
