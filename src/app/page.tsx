@@ -39,6 +39,15 @@ export default function Home() {
         className="fixed top-0 right-10 p-4 flex space-x-5"
         style={{ zIndex: 3 }}
       >
+        <Link
+          href="/"
+          className="group rounded-lg border border-transparent transition-colors hover:underline"
+        >
+          <h2 className="mb-3 text-2l font-normal">
+              Home{" "}
+          </h2>
+        </Link>
+
         <Link 
           href="/about" 
           className="group rounded-lg border border-transparent transition-colors hover:underline"
@@ -57,26 +66,11 @@ export default function Home() {
         >
           <h2 className="mb-3 text-2l font-normal">
             Works{" "}
-
           </h2>
           {/* <p className="m-0 max-w-[30ch] text-sm opacity-50">
             Learn about Next.js in an interactive course with&nbsp;quizzes!
           </p> */}
         </Link>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent transition-colors hover:underline"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2l font-normal">
-            Templates{" "}
-          </h2>
-          {/* <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p> */}
-        </a>
 
         <Link
           href="/trivial"
