@@ -49,6 +49,17 @@ export default function Works() {
           </h2>
         </Link>
       </div>
+
+      <div
+        className="min-h-screen overflow-auto"
+        style={{ paddingTop: '5rem' }}
+      >
+       <div className="container mx-auto px-20 py-4">
+        <h1 className="text-3xl font-bold mb-6">
+          Works
+        </h1>
+      </div> 
+      </div>
     </div>
     );
   }
