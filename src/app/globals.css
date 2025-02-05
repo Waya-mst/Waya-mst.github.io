@@ -4,8 +4,8 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 252;
-  --background-end-rgb: 250, 253, 255;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,4 +30,8 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.hover\:text-shadow:hover {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
