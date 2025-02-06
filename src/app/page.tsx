@@ -17,8 +17,8 @@ export default function Home() {
           left: 0, 
           width: '100%', 
           height: '100%', 
-          zIndex: 1 
-        }} 
+          zIndex: 1
+        }}
       />
 
       {/* 半透明のフィルタレイヤー（backdrop-filterを適用） */}
@@ -35,7 +35,7 @@ export default function Home() {
       />
       {/* <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(255, 255, 255, 0.5)', zIndex: 2 }} /> */}
 
-      <div 
+      <div
         className="fixed top-0 right-10 p-4 flex space-x-5"
         style={{ zIndex: 3 }}
       >

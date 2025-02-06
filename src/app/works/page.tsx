@@ -61,6 +61,22 @@ export default function Works() {
         </h1>
 
         <p className="text-xl font-semibold mb-1 px-3">
+          Vulkanを使ったレイトレーシングの実装(2024)
+        </p>
+        <p className="mb-1 px-4">
+          Vulkanの拡張機能を用いてレイトレーシングを実装(C++) 現在ImGuiを用いたUIの実装を行っている。
+        </p>
+        <a
+          href="https://github.com/Waya-mst/VulkanRaytracing"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition-shadow hover:shadow-md">
+          <p className="mb-6 px-4 transition-all duration-200 hover:text-shadow">
+            リポジトリはこちら
+          </p>
+        </a>
+
+        <p className="text-xl font-semibold mb-1 px-3">
           vufoliaを用いたUnityでのARアプリ開発(2024)
         </p>
         <p className="mb-5 px-4">
