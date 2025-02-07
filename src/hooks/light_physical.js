@@ -1,13 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Reflector } from 'three/addons/objects/Reflector.js'
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import * as THREE from 'three';
-
-const params = {
-    shadows: true,
-    exposure: 0.68,
-    bulbPower: Object.keys(bulbLuminousPowers)[4],
-    hemiIrradiance: Object.keys(hemiLuminousIrradiances)[0]
-}
+import { request } from "http";
 
 const bulbLuminousPowers = {
     '110000 lm (1000W)': 110000,
@@ -34,6 +29,14 @@ const hemiLuminousIrradiances = {
     '50000 lx (Direct Sun)': 50000
 };
 
+const params = {
+    shadows: true,
+    exposure: 0.68,
+    bulbPower: Object.keys(bulbLuminousPowers)[4],
+    hemiIrradiance: Object.keys(hemiLuminousIrradiances)[0]
+}
+
+
 let previousShadowMap = false;
 
 const Light_Physical = () => {
@@ -51,15 +54,15 @@ const Light_Physical = () => {
         renderer.toneMapping = THREE.ReinhardToneMapping;
         mount.appendChild(renderer.domElement);
 
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 0, 10);
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 1, 5);
 
         const scene = new THREE.Scene();
 
-        const bulbGeometry = new THREE.SphereGeometry(0.02, 16, 8);
+        const bulbGeometry = new THREE.SphereGeometry(0.05, 16, 8);
         const bulbLight = new THREE.PointLight(0xffee88, 1, 100, 2);
 
-        bulbMat = new THREE.MeshStandardMaterial({
+        const bulbMat = new THREE.MeshStandardMaterial({
             emissive: 0xffffee,
             emissiveIntensity: 1,
             color: 0x000000
@@ -69,7 +72,44 @@ const Light_Physical = () => {
         bulbLight.castShadow = true;
         scene.add(bulbLight);
 
+        const floorMat = new THREE.MeshStandardMaterial({
+            roughness: 0.8,
+            color: 0xffffff,
+            metalness: 0.2,
+            bumpScale: 1
+        });
+
+        const floorGeometry = new THREE.PlaneGeometry(20, 20);
+        const floorMesh = new THREE.Mesh(floorGeometry, floorMat);
+        floorMesh.receiveShadow = true;
+        floorMesh.rotation.x = -Math.PI / 2.0;
+        scene.add(floorMesh);
+
+        const mirrorGeometry = new THREE.PlaneGeometry(5, 5);
+        const mirror = new Reflector(mirrorGeometry, {
+            clipBias: 0.003,
+            textureWidth: window.innerWidth * window.devicePixelRatio,
+            textureHeight: window.innerHeight * window.devicePixelRatio,
+            color: 0x889999
+        });
+        mirror.rotateY(-Math.PI / 2.5);
+        mirror.position.set(1, 0, 1);
+        
+        scene.add(mirror);
+
+        var controls = new OrbitControls(camera, renderer.domElement);
+        controls.target.set(0, 1, 0);
+        controls.enableDamping = true;
+        
+        
+
+
+
+
+        let animationId;
         function animate() {
+            //requestAnimationFrame(animate);
+
             renderer.toneMappingExposure = Math.pow(0.94, 5.0);
             renderer.shadowMap.enabled = params.shadows;
             bulbLight.castShadow = params.shadows;
@@ -81,9 +121,30 @@ const Light_Physical = () => {
             bulbLight.power = bulbLuminousPowers[params.bulbPower];
 
             const time = Date.now() * 0.0005;
+            bulbLight.position.y = Math.cos(time) * 0.75 + 1.25;
 
+            controls.update();
+            renderer.render(scene, camera);
+            //animationId = requestAnimationFrame(animate);
         }
-    })
+        animate();
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        window.addEventListener('resize', onWindowResize);
+
+        return () => {
+            cancelAnimationFrame(animationId);
+            window.removeEventListener('resize', onWindowResize);
+            renderer.dispose();
+            mount.removeChild(renderer.domElement);
+        };
+    }, []);
+
+    return mountRef;
 };
 
 export default Light_Physical;

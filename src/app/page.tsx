@@ -1,10 +1,11 @@
 "use client"; // Client Componentとして扱う
 
 import useThree from '@/hooks/useThree';
+import Light_Physical from '@/hooks/light_physical';
 import Link from 'next/link';
 
 export default function Home() {
-  const mountRef = useThree();
+  const mountRef = Light_Physical();
 
   return (
     <div style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
