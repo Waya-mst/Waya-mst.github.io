@@ -2,10 +2,11 @@
 
 import useThree from '@/hooks/useThree';
 import Light_Physical from '@/hooks/light_physical';
+import Instance_wave from '@/hooks/instance_wave';
 import Link from 'next/link';
 
 export default function Home() {
-  const mountRef = Light_Physical();
+  const mountRef = Instance_wave();
 
   return (
     <div style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
@@ -44,7 +45,7 @@ export default function Home() {
           href="/"
           className="group rounded-lg border border-transparent transition-colors hover:underline"
         >
-          <h2 className="mb-3 text-2l font-normal">
+          <h2 className="mb-3 text-2l font-normal text-white">
               Home{" "}
           </h2>
         </Link>
@@ -53,7 +54,7 @@ export default function Home() {
           href="/about" 
           className="group rounded-lg border border-transparent transition-colors hover:underline"
         >
-          <h2 className="mb-3 text-2l font-normal">
+          <h2 className="mb-3 text-2l font-normal text-white">
             About{" "}
           </h2>
           {/* <p className="m-0 max-w-[30ch] text-sm opacity-50">
@@ -65,7 +66,7 @@ export default function Home() {
           href="/works"
           className="group rounded-lg border border-transparent transition-colors hover:underline"
         >
-          <h2 className="mb-3 text-2l font-normal">
+          <h2 className="mb-3 text-2l font-normal text-white">
             Works{" "}
           </h2>
           {/* <p className="m-0 max-w-[30ch] text-sm opacity-50">
@@ -77,7 +78,7 @@ export default function Home() {
           href="/trivial"
           className="group rounded-lg border border-transparent transition-colors hover:underline"
         >
-          <h2 className="mb-3 text-2l font-normal">
+          <h2 className="mb-3 text-2l font-normal text-white">
             ???{" "}
           </h2>
           {/* <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">

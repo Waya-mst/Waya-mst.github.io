@@ -59,6 +59,9 @@ const Light_Physical = () => {
 
         const scene = new THREE.Scene();
 
+        const light = new THREE.AmbientLight(0xffffff, 3.0);
+        scene.add(light);
+
         const bulbGeometry = new THREE.SphereGeometry(0.05, 16, 8);
         const bulbLight = new THREE.PointLight(0xffee88, 1, 100, 2);
 
@@ -90,7 +93,7 @@ const Light_Physical = () => {
             clipBias: 0.003,
             textureWidth: window.innerWidth * window.devicePixelRatio,
             textureHeight: window.innerHeight * window.devicePixelRatio,
-            color: 0x889999
+            color: 0xb5b5b5
         });
         mirror.rotateY(-Math.PI / 2.5);
         mirror.position.set(1, 0, 1);
