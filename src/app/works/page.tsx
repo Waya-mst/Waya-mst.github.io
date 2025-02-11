@@ -53,10 +53,16 @@ export default function Works() {
         </h1>
 
         <p className="text-xl font-semibold mb-1 px-3">
-          NodejsとThree.jsを使ったポートフォリオサイト(2024)
+          Three.jsを使ったポートフォリオサイト(2024)
         </p>
         <p className="mb-6 px-4">
-          Homeに表示されているシーンはThree.jsを用いて実装している。順次更新予定。
+          <a
+            href="/"
+            rel="noopener noreferrer"
+            className="transition-shadow hover:shadow-md">
+              Home
+            </a>
+          に表示されているシーンはThree.jsを用いて実装している。順次更新予定。
         </p>
 
 
@@ -80,7 +86,7 @@ export default function Works() {
           vufoliaを用いたUnityでのARアプリ開発(2024)
         </p>
         <p className="mb-5 px-4">
-          ARアプリの開発(C#)およびアプリ内で仕様する3Dモデル制作を担当
+          ARアプリの開発(C#)およびアプリ内で使用する3Dモデル制作を担当
         </p>
         <Image
           src="/image/ARApp.png"
