@@ -41,14 +41,6 @@ export default function Works() {
           </h2>
         </Link>
 
-        <Link
-          href="/trivial"
-          className="group rounded-lg border border-transparent transition-colors hover:underline"
-        >
-          <h2 className="mb-3 text-2l font-normal">
-            ???{" "}
-          </h2>
-        </Link>
       </div>
 
       <div
@@ -59,6 +51,14 @@ export default function Works() {
         <h1 className="text-3xl font-bold mb-6">
           Works
         </h1>
+
+        <p className="text-xl font-semibold mb-1 px-3">
+          NodejsとThree.jsを使ったポートフォリオサイト(2024)
+        </p>
+        <p className="mb-6 px-4">
+          Homeに表示されているシーンはThree.jsを用いて実装している。順次更新予定。
+        </p>
+
 
         <p className="text-xl font-semibold mb-1 px-3">
           Vulkanを使ったレイトレーシングの実装(2024)

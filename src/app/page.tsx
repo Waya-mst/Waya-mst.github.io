@@ -73,18 +73,6 @@ export default function Home() {
             Learn about Next.js in an interactive course with&nbsp;quizzes!
           </p> */}
         </Link>
-
-        <Link
-          href="/trivial"
-          className="group rounded-lg border border-transparent transition-colors hover:underline"
-        >
-          <h2 className="mb-3 text-2l font-normal text-white">
-            ???{" "}
-          </h2>
-          {/* <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p> */}
-        </Link>
       </div>
     </div>
   );

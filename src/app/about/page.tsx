@@ -28,13 +28,6 @@ export default function About() {
         >
           <h2 className="mb-3 text-2l font-normal">Works</h2>
         </Link>
-
-        <Link
-          href="/trivial"
-          className="group rounded-lg border border-transparent transition-colors hover:underline"
-        >
-          <h2 className="mb-3 text-2l font-normal">???</h2>
-        </Link>
       </div>
 
       {/* 本文 */}
@@ -44,7 +37,7 @@ export default function About() {
       >
         <div className="container mx-auto px-20 py-4">
           <h1 className="text-3xl font-bold mb-6">
-            About Page
+            About
           </h1>
 
           <h2 className="text-xl font-semibold mt-8 mb-5 px-3">
